@@ -1,19 +1,18 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const path = require('path');
 const ejs = require('ejs');
-const { connect } = require('./connect.js');
-const port = 3000;
 const route = require('./routes/user.js');
 const cookieParser = require('cookie-parser')
 const { authenticateToken } = require('./middlewares/authentication.js');
 const blogRoute = require('./routes/addblog.js')
+const dbConnect = require('./auth/connection.js');
 
 
 
-connect("mongodb://127.0.0.1:27017/Blogify")
-  .then((e) => console.log("MongoDB connected"))
-  .catch((error) => console.log(error))
+dbConnect();
+app.use(express.static('public'));
 
 app.set("view engine", "ejs");
 app.set("views", path.resolve('./views'));
@@ -24,6 +23,6 @@ app.use(express.static(path.resolve('./public')));
 app.use(authenticateToken("token"));
 app.use('/', route);
 app.use('/add-blog', blogRoute);
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`Server is running on http://localhost:${process.env.PORT || 3000}`);
 });

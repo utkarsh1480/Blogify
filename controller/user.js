@@ -3,7 +3,7 @@ const User = require('../model/user');
 async function handelSignupUser(req, res) {
     const { first_name, email, password } = req.body;
     if (!first_name || !email || !password) return res.render('signup');
-    const User = await user.create({
+    const user = await User.create({
         first_name,
         email,
         password
