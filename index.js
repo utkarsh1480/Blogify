@@ -6,7 +6,7 @@ const ejs = require('ejs');
 const route = require('./routes/user.js');
 const cookieParser = require('cookie-parser')
 const { authenticateToken } = require('./middlewares/authentication.js');
-const blogRoute = require('./routes/addblog.js')
+const blogRoute = require('./routes/blog.js')
 const dbConnect = require('./auth/connection.js');
 
 
@@ -22,7 +22,8 @@ app.use(express.static(path.resolve('./public')));
 
 app.use(authenticateToken("token"));
 app.use('/', route);
-app.use('/add-blog', blogRoute);
+app.use('/blog', blogRoute);
+
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Server is running on http://localhost:${process.env.PORT || 3000}`);
 });

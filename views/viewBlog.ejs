@@ -10,6 +10,42 @@
       <img src=" <%= blog.coverImage %> " alt="">
       <pre class="container"> <%= blog.body %></pre>
     </div>
+    <div class="container">
+      <img src="<%= blog.createdBy.profileImgUrl%>" alt="image" width="90px" height="90px" class="rounded-circle">    <%=blog.createdBy.first_name  %>
+      
+    </div>
+    <div class="container">
+      <h3>Comment</h3>
+      <% if (locals.User) { %>
+       <div>
+        <form action="/blog/comments/<%= blog._id %>" method="POST">
+        <input type="text" 
+              class="form-control" 
+              id="FormControlInput1" 
+              placeholder="Enter comment" 
+              name="title">
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary">Submit Comment</button>
+    </div>
+    </div>
+      <% } %>
+    <div class="container">
+      <% comments.forEach(comment => { %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+              <img src="<%= comment.createdBy.profileImgUrl %>" alt="Profile Image" width="50" height="50" class="rounded-circle me-3">
+              <h5 class="card-title mb-0"><%= comment.createdBy.first_name %></h5>
+            </div>
+            <p class="card-text"><%= comment.title %></p>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+    
+      
+    
      
      
     <%- include('./partials/script.ejs') %>
