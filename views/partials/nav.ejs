@@ -1,0 +1,81 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark" ml>
+  <div class="container-fluid mt-lg-2" >
+    <a class="navbar-brand" href="#">Blogify</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarScroll"
+      aria-controls="navbarScroll"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul
+        class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
+        style="--bs-scroll-height: 100px"
+      >
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        
+        
+
+        <% if (locals.User) { %>
+         <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/add-blog">Add Blog</a>
+        </li>
+
+<li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+Utkarsh          </a>
+          <ul class="dropdown-menu">
+            
+            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            
+          </ul>
+        </li>
+
+        <% } else { %>  
+
+         <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/signup">Create Account</a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/signin">Signin</a>
+        </li>
+        <% } %>
+        
+        
+        
+      </ul>
+      <form class="d-flex" role="search">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<% if (locals.error) { %>
+  <div class="container mt-4">
+ <div class="alert alert-danger alert-dismissible fade show" role="alert">
+   <strong>Error:</strong> <%= locals.error %>
+   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ </div>
+ </div>
+<% } %>

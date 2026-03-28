@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head.ejs') %>
+  </head>
+  <body>
+     <%- include('./partials/nav.ejs') %>
+   
+    <div class="container mt-4">
+      
+        <form action="/add-blog" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Title</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter blog title" name="title">
+         </div>
+
+          <div class="form-floating mb-03">
+             <label for="floatingTextarea2">Body</label>
+  <textarea class="form-control" placeholder="Leave the Body here" id="floatingTextarea2" style="height: 300px" name="body"></textarea>
+ 
+</div>
+        <div class="mb-3">
+        <label for="coverImage" class="form-label">Choose Image</label>
+        <input class="form-control" type="file" id="coverImage" name="coverImage">
+        </div>
+      
+<div class="mb-3">
+    <button type="submit" class="btn btn-primary">Add Blog</button>
+</div>
+
+        </form>
+
+
+    </div> 
+
+
+    <%- include('./partials/script.ejs') %>
+  </body>
+</html>
