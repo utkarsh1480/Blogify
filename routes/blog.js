@@ -22,7 +22,7 @@ router.post('/', upload.single('coverImage'), handelCreateBlog);
 
 router.get('/:id', async (req, res) => {
     const blogId = req.params.id;
-    console.log(blogId);
+    
     const Blog = await blog.findById(blogId).populate('createdBy');
     const comments = await comment.find({ blogId: req.params.id }).populate(
         "createdBy"
