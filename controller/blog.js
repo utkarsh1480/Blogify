@@ -15,11 +15,19 @@ async function handelCreateBlog(req, res) {
         });
     }
 
+    let coverImageUrl = "/images/default-blog.png";
+    
+    if (req.file) {
+        // This is necessary for Vercel's read-only filesystem
+        const base64Image = req.file.buffer.toString("base64");
+        coverImageUrl = `data:${req.file.mimetype};base64,${base64Image}`;
+    }
+
     await Blog.create({
         title,
         body,
         createdBy: req.user._id,
-        coverImage: `/uploads/${req.file.filename}`,
+        coverImage: coverImageUrl,
     });
 
     return res.redirect('/?success=Blog added successfully!');
@@ -54,7 +62,8 @@ async function handelUpdateBlog(req, res) {
 
     const updateData = { title, body };
     if (req.file) {
-        updateData.coverImage = `/uploads/${req.file.filename}`;
+        const base64Image = req.file.buffer.toString("base64");
+        updateData.coverImage = `data:${req.file.mimetype};base64,${base64Image}`;
     }
 
     await Blog.findByIdAndUpdate(req.params.id, updateData);
