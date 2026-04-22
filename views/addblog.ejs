@@ -7,6 +7,13 @@
      <%- include('./partials/nav.ejs') %>
    
     <div class="container mt-4">
+
+      <% if (typeof success !== 'undefined' && success) { %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id="successAlert">
+          <%= success %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% } %>
       
         <form action="/blog" method="post" enctype="multipart/form-data">
             <div class="mb-3">
@@ -32,6 +39,17 @@
 
 
     </div> 
+
+    <script>
+      setTimeout(() => {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+          alert.classList.remove('show');
+          alert.classList.add('fade');
+          setTimeout(() => alert.remove(), 150);
+        });
+      }, 3000);
+    </script>
 
 
     <%- include('./partials/script.ejs') %>
