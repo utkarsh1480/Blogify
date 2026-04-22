@@ -25,7 +25,7 @@ const userSchema = new Schema({
     },
     profileImgUrl: {
         type: String,
-        default: 'images/avtar.png'
+        default: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix'
     },
     role: {
         type: String,
