@@ -1,5 +1,87 @@
-<script
-  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-  crossorigin="anonymous"
-></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+<!-- Theme toggle logic -->
+<script>
+  (function () {
+    const btn = document.getElementById('themeToggle');
+    if (!btn) return;
+
+    function applyTheme(dark) {
+      if (dark) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('blogify-theme', 'dark');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('blogify-theme', 'light');
+      }
+    }
+
+    btn.addEventListener('click', function() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    applyTheme(!isDark);
+  });
+
+  // ─── TOAST SYSTEM ──────────────────────────────────────────
+  window.showToast = function(message, type = 'success') {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+
+    const toastId = 'toast-' + Date.now();
+    const bgColor = type === 'success' ? '#5bde8a' : '#ff4d4d';
+    const textColor = type === 'success' ? '#111' : '#fff';
+    
+    const toastHTML = `
+      <div id="${toastId}" class="toast show align-items-center border-0 mb-2" role="alert" aria-live="assertive" aria-atomic="true" style="background: ${bgColor}; color: ${textColor}; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); opacity: 0; transform: translateY(20px); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+        <div class="d-flex">
+          <div class="toast-body fw-bold">
+            ${message}
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
+    `;
+    
+    container.insertAdjacentHTML('beforeend', toastHTML);
+    const toastElement = document.getElementById(toastId);
+    
+    // Animate in
+    setTimeout(() => {
+      toastElement.style.opacity = '1';
+      toastElement.style.transform = 'translateY(0)';
+    }, 100);
+
+    // Auto remove
+    setTimeout(() => {
+      toastElement.style.opacity = '0';
+      toastElement.style.transform = 'translateY(20px)';
+      setTimeout(() => toastElement.remove(), 400);
+    }, 4000);
+  };
+
+  // Check URL for success/error messages
+  const urlParams = new URLSearchParams(window.location.search);
+  const successMsg = urlParams.get('success');
+  const errorMsg = urlParams.get('error');
+  if (successMsg) showToast(successMsg, 'success');
+  if (errorMsg) showToast(errorMsg, 'error');
+
+  // ─── CUSTOM CURSOR ─────────────────────────────────────────
+  const cursor = document.querySelector('.custom-cursor');
+  if (cursor) {
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    document.addEventListener('mousedown', () => cursor.style.transform = 'translate(-50%, -50%) scale(0.8)');
+    document.addEventListener('mouseup', () => cursor.style.transform = 'translate(-50%, -50%) scale(1)');
+
+    const interactiveElements = document.querySelectorAll('a, button, input, textarea, .card');
+    interactiveElements.forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
+    });
+  }
+})();
+</script>
