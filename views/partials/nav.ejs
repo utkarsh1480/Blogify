@@ -1,6 +1,8 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark" ml>
-  <div class="container-fluid mt-lg-2" >
-    <a class="navbar-brand" href="/">Blogify</a>
+<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+  <div class="container-fluid mt-lg-2">
+    <a class="navbar-brand" href="/">
+      <span class="brand-icon">✦</span> Blogify
+    </a>
     <button
       class="navbar-toggler"
       type="button"
@@ -21,49 +23,60 @@
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
         
-        
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/explore">Explore</a>
+        </li>
+      </ul>
 
+      <!-- Right Side -->
+      <ul class="navbar-nav ms-auto align-items-center">
         <% if (locals.User) { %>
          <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/blog">Add Blog</a>
         </li>
 
-<li class="nav-item dropdown">
+        <li class="nav-item dropdown">
           <a
-            class="nav-link dropdown-toggle"
+            class="nav-link dropdown-toggle d-flex align-items-center gap-2"
             href="#"
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-Utkarsh          </a>
-          <ul class="dropdown-menu">
-            
+            <img src="<%= (locals.User.profileImgUrl && !locals.User.profileImgUrl.startsWith('images/')) ? locals.User.profileImgUrl : 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + locals.User.first_name %>" alt="Profile" class="nav-avatar">
+            <%= locals.User.first_name || 'User' %>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="/profile">My Profile</a></li>
             <li><a class="dropdown-item" href="/logout">Logout</a></li>
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            
           </ul>
         </li>
 
         <% } else { %>  
-
          <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/signup">Create Account</a>
         </li>
          <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/signin">Signin</a>
+          <a class="nav-link active" aria-current="page" href="/signin">Sign in</a>
         </li>
         <% } %>
-        
-        
-        
+
+        <!-- Theme Toggle -->
+        <li class="nav-item ms-lg-2">
+          <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle dark/light theme">
+            <svg class="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+            <svg class="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          </button>
+        </li>
       </ul>
-      <form class="d-flex" role="search">
+
+      <form class="d-flex ms-lg-3" role="search" action="/explore" method="GET">
         <input
           class="form-control me-2"
           type="search"
-          placeholder="Search"
+          placeholder="Search blogs..."
           aria-label="Search"
+          name="q"
         />
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
@@ -71,11 +84,17 @@ Utkarsh          </a>
   </div>
 </nav>
 
+<!-- Modern Custom Cursor -->
+<div class="custom-cursor"></div>
+
+<!-- Toast Container -->
+<div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9999;"></div>
+
 <% if (locals.error) { %>
   <div class="container mt-4">
- <div class="alert alert-danger alert-dismissible fade show" role="alert">
-   <strong>Error:</strong> <%= locals.error %>
-   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
- </div>
- </div>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>Error:</strong> <%= locals.error %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  </div>
 <% } %>
