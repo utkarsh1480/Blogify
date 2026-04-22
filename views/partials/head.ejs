@@ -1,3 +1,6 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Blogify</title>
 <link
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
   rel="stylesheet"
@@ -9,6 +12,13 @@
 
 <!-- Your blog CSS -->
 <link rel="stylesheet" href="/css/blog.css">
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Blogify</title>
+
+<!-- Theme init - runs before paint to prevent flash -->
+<script>
+  (function() {
+    const saved = localStorage.getItem('blogify-theme');
+    if (saved === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  })();
+</script>
